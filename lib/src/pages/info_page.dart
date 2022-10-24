@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_list/src/controllers/home_controller.dart';
-import 'package:flutter_movie_list/src/pages/info_page.dart';
+import 'package:flutter_movie_list/src/controllers/info_controller.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+class InfoPage extends StatefulWidget {
+  const InfoPage({super.key, required this.title});
   final String title;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<InfoPage> createState() => _InfoPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final controller = Homecontroller();
+class _InfoPageState extends State<InfoPage> {
+  final controller = Infocontroller();
 
   _success() {
     return ListView.builder(
-        itemCount: controller.show.length,
+        itemCount: controller.info.length,
         itemBuilder: ((context, index) {
-          var show = controller.show[index];
+          var info = controller.info[index];
 
           return ListTile(
             onTap: () {
               //Passar a url para pegar a informação aqui
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => InfoPage(title: show.name.toString())));
+              Navigator.of(context).pushNamed('/home');
             },
             leading: Container(
                 width: 50,
                 height: 50,
-                child: Image.network(show.image!.medium.toString())),
-            title: Text(show.name.toString()),
+                child: Image.network(info.image!.medium.toString())),
+            title: Text(info.name.toString()),
           );
         }));
   }
@@ -51,15 +50,15 @@ class _HomePageState extends State<HomePage> {
     return Container();
   }
 
-  stateManagemente(HomeState state) {
+  stateManagemente(InfoState state) {
     switch (state) {
-      case HomeState.start:
+      case InfoState.start:
         return _start();
-      case HomeState.loading:
+      case InfoState.loading:
         return _loading();
-      case HomeState.error:
+      case InfoState.error:
         return _error();
-      case HomeState.success:
+      case InfoState.success:
         return _success();
       default:
         return _start();

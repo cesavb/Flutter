@@ -15,7 +15,7 @@ class TvMazeInfoModel {
   // Rating? rating;
   int? weight;
   Network? network;
-  // Null? webChannel;
+  Network? webChannel;
   // Null? dvdCountry;
   Externals? externals;
   Image? image;
@@ -40,7 +40,7 @@ class TvMazeInfoModel {
       // this.rating,
       this.weight,
       this.network,
-      // this.webChannel,
+      this.webChannel,
       // this.dvdCountry,
       this.externals,
       this.image,
@@ -69,7 +69,9 @@ class TvMazeInfoModel {
     weight = json['weight'];
     network =
         json['network'] != null ? new Network.fromJson(json['network']) : null;
-    // webChannel = json['webChannel'];
+    webChannel = json['webChannel'] != null
+        ? new Network.fromJson(json['webChannel'])
+        : null;
     // dvdCountry = json['dvdCountry'];
     externals = json['externals'] != null
         ? new Externals.fromJson(json['externals'])
@@ -104,7 +106,9 @@ class TvMazeInfoModel {
     if (this.network != null) {
       data['network'] = this.network!.toJson();
     }
-    // data['webChannel'] = this.webChannel;
+    if (this.webChannel != null) {
+      data['webChannel'] = this.webChannel!.toJson();
+    }
     // data['dvdCountry'] = this.dvdCountry;
     if (this.externals != null) {
       data['externals'] = this.externals!.toJson();
@@ -141,7 +145,7 @@ class Schedule {
 }
 
 class Rating {
-  double? average;
+  Null? average;
 
   Rating({this.average});
 
@@ -160,7 +164,7 @@ class Network {
   int? id;
   String? name;
   Country? country;
-  String? officialSite;
+  Null? officialSite;
 
   Network({this.id, this.name, this.country, this.officialSite});
 

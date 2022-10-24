@@ -8,8 +8,6 @@ class Homecontroller {
   final repository = TvMazeRepositoryShows();
   final state = ValueNotifier<HomeState>(HomeState.start);
 
-  // HomeState state = HomeState.start;
-
   Future start() async {
     state.value = HomeState.loading;
     try {
