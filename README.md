@@ -1,4 +1,4 @@
-# flutter_movie_list
+# Flutter Movie List
 
 A new Flutter project.
 
