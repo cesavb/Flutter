@@ -3,12 +3,12 @@ import '../models/tvmaze_info_models.dart';
 
 class TvMazeRepositoryInfo {
   final dio = Dio();
-  final url = 'https://api.tvmaze.com/shows/250';
+  final url = 'https://api.tvmaze.com/shows/';
 
   Future<List<TvMazeInfoModel>> fetchinfo() async {
     final response = await dio.get(url);
-    final listinfo = response.data as List;
+    final list = response.data as List;
 
-    return listinfo.map((json) => TvMazeInfoModel.fromJson(json)).toList();
+    return list.map((json) => TvMazeInfoModel.fromJson(json)).toList();
   }
 }

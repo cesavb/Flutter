@@ -1,10 +1,25 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_movie_list/src/controllers/home_controller.dart';
 import 'package:flutter_movie_list/src/controllers/info_controller.dart';
 
+import '../models/tvmaze_info_models.dart';
+
+class TvMazeRepositoryInfo {
+  final dio = Dio();
+  final url = 'https://api.tvmaze.com/shows/250';
+
+  Future<List<TvMazeInfoModel>> fetchinfo() async {
+    final response = await dio.get(url);
+    final list = response.data as List;
+
+    return list.map((json) => TvMazeInfoModel.fromJson(json)).toList();
+  }
+}
+
 class InfoPage extends StatefulWidget {
-  const InfoPage({super.key, required this.title});
+  const InfoPage({super.key, required this.title, required this.id});
   final String title;
+  final String id;
 
   @override
   State<InfoPage> createState() => _InfoPageState();
@@ -14,23 +29,7 @@ class _InfoPageState extends State<InfoPage> {
   final controller = Infocontroller();
 
   _success() {
-    return ListView.builder(
-        itemCount: controller.info.length,
-        itemBuilder: ((context, index) {
-          var info = controller.info[index];
-
-          return ListTile(
-            onTap: () {
-              //Passar a url para pegar a informação aqui
-              Navigator.of(context).pushNamed('/home');
-            },
-            leading: Container(
-                width: 50,
-                height: 50,
-                child: Image.network(info.image!.medium.toString())),
-            title: Text(info.name.toString()),
-          );
-        }));
+    return WidgetCard();
   }
 
   _error() {
@@ -67,7 +66,6 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     controller.start();
@@ -97,6 +95,45 @@ class _InfoPageState extends State<InfoPage> {
       //   tooltip: 'Increment',
       //   child: const Icon(Icons.add),
       // ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class WidgetCard extends StatelessWidget {
+  const WidgetCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const ListTile(
+              leading: Icon(Icons.album),
+              title: Text('The Enchanted Nightingale'),
+              subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: const Text('BUY TICKETS'),
+                  onPressed: () {/* ... */},
+                ),
+                const SizedBox(width: 8),
+                TextButton(
+                  child: const Text('LISTEN'),
+                  onPressed: () {/* ... */},
+                ),
+                const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

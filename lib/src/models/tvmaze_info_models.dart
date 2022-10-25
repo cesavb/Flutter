@@ -144,21 +144,21 @@ class Schedule {
   }
 }
 
-class Rating {
-  Null? average;
+// class Rating {
+//   Null? average;
 
-  Rating({this.average});
+//   Rating({this.average});
 
-  Rating.fromJson(Map<String, dynamic> json) {
-    average = json['average'];
-  }
+//   Rating.fromJson(Map<String, dynamic> json) {
+//     average = json['average'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['average'] = this.average;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['average'] = this.average;
+//     return data;
+//   }
+// }
 
 class Network {
   int? id;

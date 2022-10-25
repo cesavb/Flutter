@@ -5,7 +5,7 @@ void main() {
   final reposity = TvMazeRepositoryInfo();
   test('Deve trazer a Informação da pagina do Show Escolhido', () async {
     final listinfo = await reposity.fetchinfo();
-    print(listinfo);
+    print(listinfo.toString());
     // expect(list);
   });
 }
