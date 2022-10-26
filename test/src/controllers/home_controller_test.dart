@@ -5,7 +5,7 @@ void main() {
   final controller = Homecontroller();
 
   test('Deve preencher a variavel', () async {
-    await controller.start();
+    await controller.start(1);
     expect(controller.show.isNotEmpty, true);
   });
 }

@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
-
-import '../models/tvmaze_info_models.dart';
-import '../repositories/tvmazeinfo_repository.dart';
+import '../models/info_models.dart';
+import '../repositories/info_repository.dart';
 
 class Infocontroller {
-  List<TvMazeInfoModel> info = [];
-  final repository = TvMazeRepositoryInfo();
+  List<InfoModel> info = [];
+  final repository = RepositoryInfo();
   final state = ValueNotifier<InfoState>(InfoState.start);
 
-  Future start() async {
+  Future start(int id) async {
     state.value = InfoState.loading;
     try {
-      info = await repository.fetchinfo();
+      info = await repository.fetchinfo(id);
       state.value = InfoState.success;
     } catch (e) {
       state.value = InfoState.error;

@@ -1,6 +1,4 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_movie_list/src/controllers/home_controller.dart';
 import 'package:flutter_movie_list/src/pages/info_page.dart';
 
@@ -15,14 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = Homecontroller();
 
-  final client = Dio(BaseOptions(baseUrl: 'https://api.tvmaze.com'));
-  List<dynamic> list = [];
-
-  Future<void> getShows() async {
-    final response = await client.get('/shows?page=1');
-    list = response.data;
-    setState(() {});
-  }
+  var pagina = 1;
 
   _success() {
     return ListView.builder(
@@ -31,38 +22,44 @@ class _HomePageState extends State<HomePage> {
           var show = controller.show[index];
 
           return Card(
-            child: ListTile(
-              onTap: () {
-                //Passar a url para pegar a informação aqui
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => InfoPage(
-                          title: show.name.toString(),
-                          id: show.id.toString(),
-                        )));
-              },
-              leading: Container(
-                  width: 50,
-                  height: 50,
-                  child: Image.network(show.image!.medium.toString())),
-              title: Text(show.name.toString()),
+            child: SizedBox(
+              width: 300,
+              height: 100,
+              child: Center(
+                child: ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => InfoPage(
+                              title: show.name.toString(),
+                              id: show.id!.toInt(),
+                            )));
+                  },
+                  leading: SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: Image.network(show.image!.medium.toString())),
+                  title: Text(show.name.toString(),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 39, 52, 34))),
+                ),
+              ),
             ),
           );
         }));
   }
 
-  // get Image => Image;
-
   _error() {
     return Center(
         child: ElevatedButton(
             onPressed: (() {
-              controller.start();
+              controller.start(pagina);
             }),
-            child: Text('Tente Novamente')));
+            child: const Text('Tente Novamente')));
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -86,10 +83,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    controller.start();
+    // controller = Homecontroller(page: pagina);
+    controller.start(pagina);
   }
 
   @override
@@ -100,9 +96,15 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                controller.start();
+                // controller.start(pagina);
               },
-              icon: Icon(Icons.search_outlined))
+              icon: const Icon(Icons.search_outlined)),
+          IconButton(
+              onPressed: () => {pagina--, controller.start(pagina)},
+              icon: const Icon(Icons.keyboard_arrow_left_outlined)),
+          IconButton(
+              onPressed: () => {pagina++, controller.start(pagina)},
+              icon: const Icon(Icons.keyboard_arrow_right_outlined))
         ],
       ),
       body: AnimatedBuilder(
@@ -110,22 +112,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, child) {
           return stateManagemente(controller.state.value);
         },
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
-  // Future<List<TvMazeShowsModels>> fetchshow() async {
-  //   const url = 'https://api.tvmaze.com/shows?page=';
-  //   final dio = Dio();
-
-  //   final response = await dio.get(url);
-  //   final list = response.data as List;
-
-  //   return list.map((json) => TvMazeShowsModels.fromJson(json)).toList();
-  // }
 }

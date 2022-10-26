@@ -6,7 +6,7 @@ void main() {
   final controller = Infocontroller();
 
   test('Deve preencher a variavel', () async {
-    await controller.start();
+    await controller.start(250);
     expect(controller.info.isNotEmpty, true);
   });
 }

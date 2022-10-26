@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
-
-import '../models/tvmaze_shows_models.dart';
-import '../repositories/tvmazeshows_repository.dart';
-// import '../repositories/tvmazeshows_repository.dart';
+import '../models/shows_models.dart';
+import '../repositories/shows_repository.dart';
 
 class Homecontroller {
-  List<TvMazeShowsModels> show = [];
-  final repository = TvMazeRepositoryShows();
+  List<ShowsModels> show = [];
+  final repository = RepositoryShows();
   final state = ValueNotifier<HomeState>(HomeState.start);
 
-  Future start() async {
+  Future start(int pagina) async {
     state.value = HomeState.loading;
     try {
-      show = await repository.fetchshow();
+      show = await repository.fetchshow(pagina);
       state.value = HomeState.success;
     } catch (e) {
       state.value = HomeState.error;
@@ -20,4 +18,4 @@ class Homecontroller {
   }
 }
 
-enum HomeState { start, loading, success, error }
+enum HomeState { start, loading, success, error, id }

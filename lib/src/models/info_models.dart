@@ -1,4 +1,4 @@
-class TvMazeInfoModel {
+class InfoModel {
   int? id;
   String? url;
   String? name;
@@ -23,7 +23,7 @@ class TvMazeInfoModel {
   int? updated;
   Links? lLinks;
 
-  TvMazeInfoModel(
+  InfoModel(
       {this.id,
       this.url,
       this.name,
@@ -48,7 +48,7 @@ class TvMazeInfoModel {
       this.updated,
       this.lLinks});
 
-  TvMazeInfoModel.fromJson(Map<String, dynamic> json) {
+  InfoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     url = json['url'];
     name = json['name'];
@@ -145,7 +145,7 @@ class Schedule {
 }
 
 // class Rating {
-//   Null? average;
+//   double? average;
 
 //   Rating({this.average});
 
@@ -164,7 +164,7 @@ class Network {
   int? id;
   String? name;
   Country? country;
-  Null? officialSite;
+  String? officialSite;
 
   Network({this.id, this.name, this.country, this.officialSite});
 
