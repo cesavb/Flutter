@@ -61,15 +61,15 @@ class _InfoPageState extends State<InfoPage> {
     return Container();
   }
 
-  stateManagemente(InfoState state) {
+  stateManagemente(HomeState state) {
     switch (state) {
-      case InfoState.start:
+      case HomeState.start:
         return _start();
-      case InfoState.loading:
+      case HomeState.loading:
         return _loading();
-      case InfoState.error:
+      case HomeState.error:
         return _error();
-      case InfoState.success:
+      case HomeState.success:
         return _success();
       default:
         return _start();

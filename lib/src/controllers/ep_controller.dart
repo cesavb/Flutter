@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_movie_list/src/models/ep_models.dart';
 import 'package:flutter_movie_list/src/repositories/shows_repository.dart';
-// import '../models/shows_models.dart';
-import '../models/info_models.dart';
-// import '../repositories/info_repository.dart';
 
-class Infocontroller {
-  List<InfoModel> info = [];
+class Epcontroller {
+  List<EpModels> ep = [];
   final repository = RepositoryShows();
   final state = ValueNotifier<HomeState>(HomeState.start);
 
   Future start(int id) async {
     state.value = HomeState.loading;
     try {
-      info = await repository.fetchinfo(id);
+      ep = await repository.fetchep(id);
       state.value = HomeState.success;
     } catch (e) {
       state.value = HomeState.error;
