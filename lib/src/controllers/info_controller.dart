@@ -12,7 +12,7 @@ class Infocontroller {
   Future start(int id) async {
     state.value = HomeState.loading;
     try {
-      info = await repository.fetchinfo(id);
+      // info = await repository.fetchinfo(id);
       state.value = HomeState.success;
     } catch (e) {
       state.value = HomeState.error;

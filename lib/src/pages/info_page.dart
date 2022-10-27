@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movie_list/src/controllers/info_controller.dart';
+import 'package:flutter_movie_list/src/controllers/home_controller.dart';
+// import 'package:flutter_movie_list/src/controllers/info_controller.dart';
+import 'package:http/http.dart';
 
 class InfoPage extends StatefulWidget {
-  const InfoPage({super.key, required this.title, required this.id});
+  const InfoPage(
+      {super.key,
+      required this.title,
+      required this.id,
+      required this.poster,
+      required this.gen,
+      required this.summary});
+
   final String title;
   final int id;
+  final String poster;
+  final String gen;
+  final String summary;
 
   @override
   State<InfoPage> createState() => _InfoPageState();
@@ -13,35 +25,28 @@ class InfoPage extends StatefulWidget {
 // pegar direto da primeiro link as informações
 
 class _InfoPageState extends State<InfoPage> {
-  final controller = Infocontroller();
+  final controller = Homecontroller();
 
   _success() {
-    return ListView.builder(
-        itemCount: controller.info.length,
-        itemBuilder: ((context, index) {
-          var info = controller.info[index];
-
-          return Card(
-            child: SizedBox(
-              width: 300,
-              height: 100,
-              child: Center(
-                  child: ListTile(
-                onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => {});
-                },
-                leading: SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: Image.network(info.image!.medium.toString())),
-                title: Text(info.name.toString(),
-                    style: const TextStyle(
-                        fontSize: 20, color: Color.fromARGB(255, 39, 52, 34))),
-              )),
-            ),
-          );
-        }));
+    // return ListView.builder(
+    //     itemCount: controller.show.length,
+    //     itemBuilder: ((context, index) {
+    return Card(
+      child: Container(
+        child: Stack(children: [
+          SizedBox(
+              width: 350,
+              height: 350,
+              child: Image.network(widget.poster.toString())),
+          SizedBox(
+            width: 300,
+            height: 100,
+            child: Text(widget.title.toString()),
+          ),
+        ]),
+      ),
+    );
+    // }));
   }
 
   _error() {
@@ -93,7 +98,7 @@ class _InfoPageState extends State<InfoPage> {
         actions: [
           IconButton(
               onPressed: () {
-                controller.start(id);
+                // controller.start(id);
               },
               icon: Icon(Icons.search_outlined))
         ],

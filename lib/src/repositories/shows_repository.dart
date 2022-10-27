@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import '../models/shows_models.dart';
-import '../models/info_models.dart';
+// import '../models/info_models.dart';
 import '../models/ep_models.dart';
 
 class RepositoryShows {
@@ -13,12 +13,12 @@ class RepositoryShows {
     return list.map((json) => ShowsModels.fromJson(json)).toList();
   }
 
-  Future<List<InfoModel>> fetchinfo(id) async {
-    final response = await client.get('/shows/$id');
-    final list = response.data;
+  // Future<List<InfoModel>> fetchinfo(id) async {
+  //   final response = await client.get('/shows/$id');
+  //   final list = response.data;
 
-    return list.map((json) => ShowsModels.fromJson(json));
-  }
+  //   return list.map((json) => InfoModel.fromJson(json));
+  // }
 
   Future<List<EpModels>> fetchep(id) async {
     final response = await client.get('/shows/$id/episodes');

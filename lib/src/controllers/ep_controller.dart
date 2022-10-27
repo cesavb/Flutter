@@ -5,17 +5,17 @@ import 'package:flutter_movie_list/src/repositories/shows_repository.dart';
 class Epcontroller {
   List<EpModels> ep = [];
   final repository = RepositoryShows();
-  final state = ValueNotifier<HomeState>(HomeState.start);
+  final state = ValueNotifier<EpState>(EpState.start);
 
   Future start(int id) async {
-    state.value = HomeState.loading;
+    state.value = EpState.loading;
     try {
       ep = await repository.fetchep(id);
-      state.value = HomeState.success;
+      state.value = EpState.success;
     } catch (e) {
-      state.value = HomeState.error;
+      state.value = EpState.error;
     }
   }
 }
 
-enum HomeState { start, loading, success, error }
+enum EpState { start, loading, success, error }

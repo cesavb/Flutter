@@ -32,6 +32,9 @@ class _HomePageState extends State<HomePage> {
                         builder: (context) => InfoPage(
                               title: show.name.toString(),
                               id: show.id!.toInt(),
+                              gen: show.genres.toString(),
+                              poster: show.image!.original.toString(),
+                              summary: show.summary.toString(),
                             )));
                   },
                   leading: SizedBox(
