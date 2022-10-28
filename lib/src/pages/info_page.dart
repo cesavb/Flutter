@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_list/src/controllers/home_controller.dart';
-// import 'package:flutter_movie_list/src/controllers/info_controller.dart';
-import 'package:http/http.dart';
 
 class InfoPage extends StatefulWidget {
   const InfoPage(
@@ -26,43 +24,41 @@ class InfoPage extends StatefulWidget {
   State<InfoPage> createState() => _InfoPageState();
 }
 
-// pegar direto da primeiro link as informações
-
 class _InfoPageState extends State<InfoPage> {
   final controller = Homecontroller();
-  
 
   _success() {
     final Size size = MediaQuery.of(context).size;
     final double padding = 25;
     final sidePadding = EdgeInsets.symmetric(horizontal: padding);
 
-    return Builder(
-      builder: (context) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
         return Container(
           width: size.width,
           height: size.height,
-          child: Stack(
-            children: [ 
-              SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Padding(
-                  padding: sidePadding,
-                  child: Image.network(widget.poster.toString()),
-                ),
-              // Positioned(child: Flex(
-              //   direction: Axis.vertical,
-              //   children: 
-              //         [Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start, 
-              //           children: [ 
-              //           Text('Dias:$widget.day'), 
-              //           Text('Horario:$widget.hour')]),
-              //         ], 
-              // )),  
-        ),]),
+          child: Stack(children: [
+            SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: sidePadding,
+                child: Image.network(widget.poster.toString()),
+              ),
+            ),
+            Container(
+                child: Column(
+              children: [
+                Text(widget.title),
+              ],
+            )),
+            Container(
+                child: SizedBox(
+                    width: size.width,
+                    height: size.height,
+                    child: Text(widget.summary))),
+          ]),
         );
-      }
+      },
     );
   }
 
@@ -107,29 +103,15 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-              onPressed: () {
-                // controller.start(id);
-              },
-              icon: Icon(Icons.search_outlined))
-        ],
-      ),
-      body: AnimatedBuilder(
-        animation: controller.state,
-        builder: (context, child) {
-          return stateManagemente(controller.state.value);
-        },
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: AnimatedBuilder(
+          animation: controller.state,
+          builder: (context, child) {
+            return stateManagemente(controller.state.value);
+          },
+        ));
   }
 }
