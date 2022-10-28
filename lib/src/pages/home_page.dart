@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_list/src/controllers/home_controller.dart';
+import 'package:flutter_movie_list/src/pages/info_page.dart';
+import 'package:flutter_movie_list/src/pages/search_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  HomePage({super.key, required this.title});
   final String title;
 
   @override
@@ -12,21 +14,43 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = Homecontroller();
 
+  var pagina = 1;
+
   _success() {
     return ListView.builder(
         itemCount: controller.show.length,
         itemBuilder: ((context, index) {
           var show = controller.show[index];
 
-          return ListTile(
-            onTap: () {
-              //Passar a url para pegar a informação aqui
-            },
-            leading: Container(
-                width: 50,
-                height: 50,
-                child: Image.network(show.image!.medium.toString())),
-            title: Text(show.name.toString()),
+          return Card(
+            child: SizedBox(
+              width: 300,
+              height: 100,
+              child: Center(
+                child: ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => InfoPage(
+                              title: show.name.toString(),
+                              id: show.id!.toInt(),
+                              gen: show.genres.toString(),
+                              poster: show.image!.original.toString(),
+                              summary: show.summary.toString(), 
+                              day: show.schedule!.days.toString(), 
+                              hour: show.schedule!.time.toString(),
+                            )));
+                  },
+                  leading: SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: Image.network(show.image!.medium.toString())),
+                  title: Text(show.name.toString(),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 39, 52, 34))),
+                ),
+              ),
+            ),
           );
         }));
   }
@@ -35,13 +59,13 @@ class _HomePageState extends State<HomePage> {
     return Center(
         child: ElevatedButton(
             onPressed: (() {
-              controller.start();
+              controller.start(pagina);
             }),
-            child: Text('Tente Novamente')));
+            child: const Text('Tente Novamente')));
   }
 
   _loading() {
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 
   _start() {
@@ -65,10 +89,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    controller.start();
+    controller.start(pagina);
   }
 
   @override
@@ -79,9 +101,15 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                controller.start();
+                showSearch(context: context, delegate: SearchPage());
               },
-              icon: Icon(Icons.search_outlined))
+              icon: const Icon(Icons.search_outlined)),
+          IconButton(
+              onPressed: () => {pagina--, controller.start(pagina)},
+              icon: const Icon(Icons.keyboard_arrow_left_outlined)),
+          IconButton(
+              onPressed: () => {pagina++, controller.start(pagina)},
+              icon: const Icon(Icons.keyboard_arrow_right_outlined))
         ],
       ),
       body: AnimatedBuilder(
@@ -89,12 +117,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, child) {
           return stateManagemente(controller.state.value);
         },
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

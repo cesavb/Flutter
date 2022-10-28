@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'src/pages/home_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -11,9 +10,9 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'TVMaze',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: const HomePage(title: 'Séries e Filmes'),
+      home: HomePage(title: 'Séries e Filmes'),
     );
   }
 }

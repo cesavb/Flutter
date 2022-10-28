@@ -1,4 +1,4 @@
-class TvMazeInfoModel {
+class ShowsModels {
   int? id;
   String? url;
   String? name;
@@ -15,7 +15,7 @@ class TvMazeInfoModel {
   // Rating? rating;
   int? weight;
   Network? network;
-  // Null? webChannel;
+  Network? webChannel;
   // Null? dvdCountry;
   Externals? externals;
   Image? image;
@@ -23,7 +23,7 @@ class TvMazeInfoModel {
   int? updated;
   Links? lLinks;
 
-  TvMazeInfoModel(
+  ShowsModels(
       {this.id,
       this.url,
       this.name,
@@ -40,7 +40,7 @@ class TvMazeInfoModel {
       // this.rating,
       this.weight,
       this.network,
-      // this.webChannel,
+      this.webChannel,
       // this.dvdCountry,
       this.externals,
       this.image,
@@ -48,7 +48,7 @@ class TvMazeInfoModel {
       this.updated,
       this.lLinks});
 
-  TvMazeInfoModel.fromJson(Map<String, dynamic> json) {
+  ShowsModels.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     url = json['url'];
     name = json['name'];
@@ -69,7 +69,9 @@ class TvMazeInfoModel {
     weight = json['weight'];
     network =
         json['network'] != null ? new Network.fromJson(json['network']) : null;
-    // webChannel = json['webChannel'];
+    webChannel = json['webChannel'] != null
+        ? new Network.fromJson(json['webChannel'])
+        : null;
     // dvdCountry = json['dvdCountry'];
     externals = json['externals'] != null
         ? new Externals.fromJson(json['externals'])
@@ -104,7 +106,9 @@ class TvMazeInfoModel {
     if (this.network != null) {
       data['network'] = this.network!.toJson();
     }
-    // data['webChannel'] = this.webChannel;
+    if (this.webChannel != null) {
+      data['webChannel'] = this.webChannel!.toJson();
+    }
     // data['dvdCountry'] = this.dvdCountry;
     if (this.externals != null) {
       data['externals'] = this.externals!.toJson();
@@ -140,21 +144,21 @@ class Schedule {
   }
 }
 
-class Rating {
-  double? average;
+// class Rating {
+//   double? average;
 
-  Rating({this.average});
+//   Rating({this.average});
 
-  Rating.fromJson(Map<String, dynamic> json) {
-    average = json['average'];
-  }
+//   Rating.fromJson(Map<String, dynamic> json) {
+//     average = json['average'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['average'] = this.average;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['average'] = this.average;
+//     return data;
+//   }
+// }
 
 class Network {
   int? id;

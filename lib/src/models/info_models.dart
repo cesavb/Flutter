@@ -1,4 +1,4 @@
-class TvMazeShowsModels {
+class InfoModel {
   int? id;
   String? url;
   String? name;
@@ -23,7 +23,7 @@ class TvMazeShowsModels {
   int? updated;
   Links? lLinks;
 
-  TvMazeShowsModels(
+  InfoModel(
       {this.id,
       this.url,
       this.name,
@@ -48,7 +48,7 @@ class TvMazeShowsModels {
       this.updated,
       this.lLinks});
 
-  TvMazeShowsModels.fromJson(Map<String, dynamic> json) {
+  InfoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     url = json['url'];
     name = json['name'];
