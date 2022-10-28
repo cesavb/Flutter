@@ -13,17 +13,17 @@ class RepositoryShows {
     return list.map((json) => ShowsModels.fromJson(json)).toList();
   }
 
-  // Future<List<InfoModel>> fetchinfo(id) async {
-  //   final response = await client.get('/shows/$id');
-  //   final list = response.data;
-
-  //   return list.map((json) => InfoModel.fromJson(json));
-  // }
-
   Future<List<EpModels>> fetchep(id) async {
     final response = await client.get('/shows/$id/episodes');
     final list = response.data as List;
 
     return list.map((json) => EpModels.fromJson(json)).toList();
+  }
+
+  Future<List<ShowsModels>> fetchsearch(searchFieldLabel) async {
+    final response = await client.get('/shows?q=$searchFieldLabel');
+    final list = response.data as List;
+
+    return list.map((json) => ShowsModels.fromJson(json)).toList();
   }
 }
