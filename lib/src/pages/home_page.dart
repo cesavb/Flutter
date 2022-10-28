@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_list/src/controllers/home_controller.dart';
 import 'package:flutter_movie_list/src/pages/info_page.dart';
+import 'package:flutter_movie_list/src/pages/search_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key, required this.title});
@@ -34,7 +35,9 @@ class _HomePageState extends State<HomePage> {
                               id: show.id!.toInt(),
                               gen: show.genres.toString(),
                               poster: show.image!.original.toString(),
-                              summary: show.summary.toString(),
+                              summary: show.summary.toString(), 
+                              day: show.schedule!.days.toString(), 
+                              hour: show.schedule!.time.toString(),
                             )));
                   },
                   leading: SizedBox(
@@ -87,7 +90,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // controller = Homecontroller(page: pagina);
     controller.start(pagina);
   }
 
@@ -99,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                // controller.start(pagina);
+                showSearch(context: context, delegate: SearchPage());
               },
               icon: const Icon(Icons.search_outlined)),
           IconButton(

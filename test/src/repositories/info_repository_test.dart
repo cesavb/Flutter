@@ -6,8 +6,8 @@ void main() {
   int id = 250;
 
   test('Deve trazer a Informação da pagina do Show Escolhido', () async {
-    final listinfo = await reposity.fetchinfo(id);
-    print(listinfo);
+    // final listinfo = await reposity.fetchinfo(id);
+    // print(listinfo);
     // expect(list);
   });
 }

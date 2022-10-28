@@ -10,6 +10,8 @@ class InfoPage extends StatefulWidget {
       required this.id,
       required this.poster,
       required this.gen,
+      required this.day,
+      required this.hour,
       required this.summary});
 
   final String title;
@@ -17,6 +19,8 @@ class InfoPage extends StatefulWidget {
   final String poster;
   final String gen;
   final String summary;
+  final String day;
+  final String hour;
 
   @override
   State<InfoPage> createState() => _InfoPageState();
@@ -26,27 +30,40 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   final controller = Homecontroller();
+  
 
   _success() {
-    // return ListView.builder(
-    //     itemCount: controller.show.length,
-    //     itemBuilder: ((context, index) {
-    return Card(
-      child: Container(
-        child: Stack(children: [
-          SizedBox(
-              width: 350,
-              height: 350,
-              child: Image.network(widget.poster.toString())),
-          SizedBox(
-            width: 300,
-            height: 100,
-            child: Text(widget.title.toString()),
-          ),
-        ]),
-      ),
+    final Size size = MediaQuery.of(context).size;
+    final double padding = 25;
+    final sidePadding = EdgeInsets.symmetric(horizontal: padding);
+
+    return Builder(
+      builder: (context) {
+        return Container(
+          width: size.width,
+          height: size.height,
+          child: Stack(
+            children: [ 
+              SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Padding(
+                  padding: sidePadding,
+                  child: Image.network(widget.poster.toString()),
+                ),
+              // Positioned(child: Flex(
+              //   direction: Axis.vertical,
+              //   children: 
+              //         [Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start, 
+              //           children: [ 
+              //           Text('Dias:$widget.day'), 
+              //           Text('Horario:$widget.hour')]),
+              //         ], 
+              // )),  
+        ),]),
+        );
+      }
     );
-    // }));
   }
 
   _error() {
@@ -90,7 +107,6 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    var id = widget.id;
 
     return Scaffold(
       appBar: AppBar(
